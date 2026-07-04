@@ -11,6 +11,35 @@ That means Base/static hosting can run the **frontend shell**, but the Forven ba
 
 Do not expose a live/mainnet trading backend without understanding the security model. Keep `FORVEN_EXECUTION_MODE=paper` unless you deliberately opt into unsupported live execution.
 
+## Can the backend run in Base?
+
+Only if the Base runtime you are using supports all of these at the same time:
+
+- a long-running Python 3.11+ web process,
+- an exposed HTTP/WebSocket port for the FastAPI service,
+- persistent filesystem/storage for `FORVEN_HOME`, SQLite, Chroma, logs, credentials, and downloaded market data,
+- background jobs/worker loops that can keep running outside a single request,
+- environment variables/secrets for API keys and exchange/testnet credentials.
+
+If Base only hosts static frontend files or request/response functions, it is not enough to run the full Forven backend. In that case, use Base for the dashboard and run the backend in a terminal, container, VPS, or another Python-capable host.
+
+## Can the backend run in a terminal?
+
+Yes. A terminal is the simplest dev/single-user setup. From the repository root:
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install --upgrade pip
+python -m pip install -e .
+cp .env.example .env
+START_BOT=0 START_DAEMON=0 python -m uvicorn --app-dir . forven.api:app --host 127.0.0.1 --port 8003
+```
+
+Then build or run the frontend with `VITE_API_BASE=http://127.0.0.1:8003/api`.
+
+This terminal mode is usually best for local testing. It stops when the terminal/process stops unless you wrap it with a service manager such as Docker, systemd, pm2, tmux/screen, or a managed container platform.
+
 ## Frontend build
 
 From the repository root:
