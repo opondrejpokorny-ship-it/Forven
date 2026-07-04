@@ -1,0 +1,16 @@
+{
+	"name": "forven-base-deploy",
+	"private": true,
+	"version": "0.1.0",
+	"type": "module",
+	"scripts": {
+		"postinstall": "npm --prefix frontend install",
+		"dev": "npm --prefix frontend run dev",
+		"build": "node ./scripts/build-base.mjs",
+		"preview": "npm --prefix frontend run preview",
+		"check": "npm --prefix frontend run check"
+	},
+	"engines": {
+		"node": ">=20"
+	}
+}
