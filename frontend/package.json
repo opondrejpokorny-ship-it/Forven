@@ -6,6 +6,8 @@
 	"scripts": {
 		"dev": "vite dev --config vite.config.ts",
 		"build": "vite build --config vite.config.ts",
+		"build:base": "node ./scripts/build-static.mjs",
+		"build:static": "node ./scripts/build-static.mjs",
 		"preview": "vite preview --config vite.config.ts",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
